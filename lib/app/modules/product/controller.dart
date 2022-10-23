@@ -1,5 +1,8 @@
+import 'package:app_hortifruti_pratico/app/data/models/cart_product.dart';
 import 'package:app_hortifruti_pratico/app/data/models/product.dart';
 import 'package:app_hortifruti_pratico/app/data/models/store.dart';
+import 'package:app_hortifruti_pratico/app/data/services/cart/service.dart';
+import 'package:app_hortifruti_pratico/app/widgets/quatity_and_weight/quantity_and_weight_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +10,7 @@ class ProductController extends GetxController {
   final product = Rxn<ProductModel>();
   final store = Rxn<StoreModel>();
   final observationController = TextEditingController();
+  final _cartService = Get.find<CartService>();
 
   @override
   void onInit() {
@@ -16,7 +20,45 @@ class ProductController extends GetxController {
     super.onInit();
   }
 
-  void addCart() {
-    observationController.text;
+  void addCart() async {
+    var quantity = Get.find<QuatityAndWeightController>().quantity;
+
+    if (_cartService.isANeswStore(store.value!)) {
+      var startNewCart = await showDialogNewCart();
+
+      if (startNewCart == true) {
+        _cartService.clearCart();
+      } else {
+        return;
+      }
+    }
+
+    if (_cartService.products.isEmpty) {
+      _cartService.newCart(store.value!);
+    }
+
+    _cartService.addProductToCart(CartProductModel(
+        product: product.value!,
+        quantity: quantity,
+        observation: observationController.text));
+
+    ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(SnackBar(
+        content: Text(
+            "O  item " + product.value!.name + " foi adicionado no carrinho")));
+
+    Future.delayed(const Duration(milliseconds: 300), Get.back);
+  }
+
+  Future<dynamic> showDialogNewCart() {
+    return Get.dialog(AlertDialog(
+      content: const Text(
+          "Seu carrinho atual será perdido se adicionar produtos de um novo estabelecimento"),
+      actions: [
+        TextButton(onPressed: () => Get.back(), child: const Text("Voltar")),
+        TextButton(
+            onPressed: () => Get.back(result: true),
+            child: const Text("Continuar")),
+      ],
+    ));
   }
 }

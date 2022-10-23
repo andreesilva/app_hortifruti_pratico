@@ -1,10 +1,21 @@
+import 'package:app_hortifruti_pratico/app/modules/cart/binding.dart';
+import 'package:app_hortifruti_pratico/app/modules/cart/page.dart';
+import 'package:app_hortifruti_pratico/app/modules/checkout/binding.dart';
+import 'package:app_hortifruti_pratico/app/modules/checkout/page.dart';
 import 'package:app_hortifruti_pratico/app/modules/dashboard/binding.dart';
 import 'package:app_hortifruti_pratico/app/modules/dashboard/page.dart';
+import 'package:app_hortifruti_pratico/app/modules/login/binding.dart';
+import 'package:app_hortifruti_pratico/app/modules/login/page.dart';
 import 'package:app_hortifruti_pratico/app/modules/product/binding.dart';
 import 'package:app_hortifruti_pratico/app/modules/product/page.dart';
 import 'package:app_hortifruti_pratico/app/modules/store/binding.dart';
 import 'package:app_hortifruti_pratico/app/modules/store/page.dart';
+import 'package:app_hortifruti_pratico/app/modules/user_address/binding.dart';
+import 'package:app_hortifruti_pratico/app/modules/user_address/page.dart';
+import 'package:app_hortifruti_pratico/app/modules/user_address_list/binding.dart';
+import 'package:app_hortifruti_pratico/app/modules/user_address_list/page.dart';
 import 'package:get/get.dart';
+
 import 'routes.dart';
 
 abstract class AppPages {
@@ -23,6 +34,31 @@ abstract class AppPages {
       name: Routes.product,
       page: () => ProductPage(),
       binding: ProductBinding(),
+    ),
+     GetPage(
+      name: Routes.cart,
+      page: () => CartPage(),
+      binding: CartBinding(),
+    ),
+      GetPage(
+      name: Routes.checkout,
+      page: () => CheckoutPage(),
+      binding: CheckoutBinding(),
+    ),
+     GetPage(
+      name: Routes.login,
+      page: () => LoginPage(),
+      binding: LoginBinding(),
+    ),
+     GetPage(
+      name: Routes.userAddress,
+      page: () => UserAddressPage(),
+      binding: UserAddressBinding(),
+    ),
+     GetPage(
+      name: Routes.userAddressList,
+      page: () => UserAddressListPage(),
+      binding: UserAddressListBinding(),
     ),
   ];
 }

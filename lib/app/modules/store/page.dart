@@ -3,13 +3,16 @@ import 'package:app_hortifruti_pratico/app/routes/routes.dart';
 import 'package:app_hortifruti_pratico/app/widgets/store_status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class StorePage extends GetView<StoreController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.shopping_cart),
+          onPressed: () => Get.toNamed(Routes.cart)
+          ),
         body: controller.obx((state) => CustomScrollView(slivers: [
               const SliverAppBar(),
               SliverToBoxAdapter(

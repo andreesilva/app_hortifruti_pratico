@@ -1,5 +1,5 @@
 import 'package:app_hortifruti_pratico/app/modules/product/controller.dart';
-import 'package:app_hortifruti_pratico/app/widgets/quatity_and_weight.dart';
+import 'package:app_hortifruti_pratico/app/widgets/quatity_and_weight/quatity_and_weight.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -50,7 +50,12 @@ class ProductPage extends GetView<ProductController> {
                   borderRadius: BorderRadius.circular(8.0)),
               child: Column(
                 children: [
-                  Text("Altere a quantidade"),
+                  Text('Altere ${product.iskg ? 'o peso':'a quantidade'}',
+                  style: const TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w500
+                  ),
+                  ),
                   SizedBox(
                     height: 4.0,
                   ),
