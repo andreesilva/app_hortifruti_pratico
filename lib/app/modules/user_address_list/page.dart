@@ -6,7 +6,7 @@ class UserAddressListPage extends GetView<UserAddressListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Meus documentos')),
+        appBar: AppBar(title: Text('Meus endereços')),
         body: controller.obx(
           (state) => SingleChildScrollView(
             child: Column(
@@ -30,7 +30,7 @@ class UserAddressListPage extends GetView<UserAddressListController> {
                     const Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Text(
-                        'Não há nehum endereço cadastrado',
+                        'Não há nenhum endereço cadastrado',
                         textAlign: TextAlign.center,
                         ),
                     ),

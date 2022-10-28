@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:app_hortifruti_pratico/app/data/models/address.dart';
 import 'package:app_hortifruti_pratico/app/data/models/city.dart';
+import 'package:app_hortifruti_pratico/app/data/models/order.dart';
 import 'package:app_hortifruti_pratico/app/data/models/order_request.dart';
 import 'package:app_hortifruti_pratico/app/data/models/store.dart';
 import 'package:app_hortifruti_pratico/app/data/models/user.dart';
@@ -61,6 +62,12 @@ class Api extends GetConnect {
     return UserLoginResponseModel.fromJson(response.body);
   }
 
+  Future<UserModel> register(UserProfileRequestModel data) async {
+    var response = _errorHandler(await post('cliente/cadastro', jsonEncode(data)));
+
+    return UserModel.fromJson(response.body);
+  }
+
   Future<UserModel> getUser() async {
     var response = _errorHandler(await get('auth/me'));
 
@@ -69,7 +76,7 @@ class Api extends GetConnect {
 
   Future<UserModel> putUser(UserProfileRequestModel data) async {
     var response = _errorHandler(await put('cliente/editar', jsonEncode(data)));
-    
+
     return UserModel.fromJson(response.body);
   }
 
@@ -84,9 +91,8 @@ class Api extends GetConnect {
     return data;
   }
 
-  
-  Future<List<StoreModel>> getStores() async {
-    var response = _errorHandler(await get('cidades/1/estabelecimentos'));
+  Future<List<StoreModel>> getStores(int cityId) async {
+    var response = _errorHandler(await get('cidades/$cityId/estabelecimentos'));
 
     List<StoreModel> data = [];
 
@@ -119,6 +125,25 @@ class Api extends GetConnect {
     _errorHandler(await post('pedidos', jsonEncode(data)));
   }
 
+  Future<List<OrderModel>> getOrders() async {
+    var response = _errorHandler(await get('pedidos'));
+
+    List<OrderModel> data = [];
+    for (var order in response.body) {
+      data.add(OrderModel.fromJson(order));
+    }
+
+    return data;
+  }
+
+  Future<OrderModel> getOrder(String id) async {
+    var response = _errorHandler(await get('pedidos/$id'));
+
+    return OrderModel.fromJson(response.body);
+  }
+
+  
+
   Response _errorHandler(Response response) {
     print(response.bodyString);
     switch (response.statusCode) {
@@ -127,7 +152,7 @@ class Api extends GetConnect {
       case 204:
         return response;
       case 422:
-        throw response.body['errors'].first['message'];  
+        throw response.body['errors'].first['message'];
       default:
         throw 'Ocorreu um erro';
     }

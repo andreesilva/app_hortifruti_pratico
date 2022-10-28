@@ -8,20 +8,37 @@ class UserProfilePage extends GetView<UserProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Meu Perfil')),
-      body: controller.obx((state) =>SingleChildScrollView(
+      body: Obx(() {
+        if (controller.loading.isTrue) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (!controller.isLogged) {
+          return Center(
+            child: ElevatedButton(
+                onPressed: () => Get.toNamed(Routes.login),
+                child: const Text('Entrar com a minha conta')),
+          );
+        }
+
+        return SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          child:  Column(
+          child: Column(
             children: [
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: ()=> Get.toNamed(Routes.userAddressList), 
-                      child: const Text("Meus endereços")),
+                        onPressed: () => Get.toNamed(Routes.userAddressList),
+                        child: const Text("Meus endereços")),
                   ),
                 ],
               ),
-              const SizedBox(height: 8.0,),
+              const SizedBox(
+                height: 8.0,
+              ),
               Form(
                 key: controller.formKey,
                 child: Column(
@@ -69,51 +86,45 @@ class UserProfilePage extends GetView<UserProfileController> {
                       ),
                       obscureText: true,
                       validator: (String? value) {
-                        if (value != null && value.isNotEmpty && value.length < 8) {
+                        if (value != null &&
+                            value.isNotEmpty &&
+                            value.length < 8) {
                           return 'Informe uma senha válida maior que  8  caracteres';
                         }
                         return null;
                       },
                     ),
-                    
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Row(
                         children: [
                           Expanded(
-                              child: ElevatedButton(
-                                  onPressed: controller.submit,
-                                  child: const Text("Atualizar")),
+                            child: ElevatedButton(
+                                onPressed: controller.submit,
+                                child: const Text("Atualizar")),
                           ),
                         ],
                       ),
                     ),
                     Row(
-                        children: [
-                          Expanded(
-                              child: OutlinedButton(
-                                  onPressed: controller.logout,
-                                  child: const Text("Sair da minha conta"),
-                                  style: OutlinedButton.styleFrom(
-                                    primary: Colors.red
-                                  ),
-                                  ),
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: controller.logout,
+                            child: const Text("Sair da minha conta"),
+                            style:
+                                OutlinedButton.styleFrom(primary: Colors.red),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-          ),
-          onError: (error) => Center(
-            child: ElevatedButton(
-              onPressed: () => Get.toNamed(Routes.login),
-              child: const Text('Entrar com a minha conta'), 
-              ),
-          ),
-          ),
+        );
+      }),
     );
   }
 }

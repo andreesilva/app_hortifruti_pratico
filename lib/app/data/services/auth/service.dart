@@ -14,9 +14,9 @@ class AuthService extends GetxService {
   @override
   void onInit() async {
     
-    //if(_storageService.token != null){
+    if(_storageService.token != null){
       await _getUser();
-    //}
+    }
   
     super.onInit();
   }

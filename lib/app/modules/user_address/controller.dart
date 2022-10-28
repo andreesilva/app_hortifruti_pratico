@@ -74,10 +74,9 @@ class UserAddressController extends GetxController
       ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
           const SnackBar(content: Text("Um novo endereço foi cadastrado")));
       Get.back(result: true);
-    },
-        onError: (error) => Get.dialog(AlertDialog(
-              title: Text(error.toString()),
-            )));
+     }, onError: (error) {
+      Get.dialog(AlertDialog(title: Text(error.toString())));
+    });
   }
 
   void _updateAddress(UserAddressRequestModel userAddressRequest) {
@@ -86,10 +85,9 @@ class UserAddressController extends GetxController
       ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
           const SnackBar(content: Text("Seu endereço foi atualizado")));
       Get.back(result: true);
-    },
-        onError: (error) => Get.dialog(AlertDialog(
-              title: Text(error.toString()),
-            )));
+     }, onError: (error) {
+      Get.dialog(AlertDialog(title: Text(error.toString())));
+    });
             
   }
 

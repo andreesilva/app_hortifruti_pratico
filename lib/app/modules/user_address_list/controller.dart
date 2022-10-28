@@ -45,8 +45,8 @@ class UserAddressListController extends GetxController
       await fetchAddresses();
       ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
           const SnackBar(content: Text("O endereço foi excluído")));
-    },
-        onError: (error) =>
-            Get.dialog(AlertDialog(title: Text(error.toString()))));
+    }, onError: (error) {
+      Get.dialog(AlertDialog(title: Text(error.toString())));
+    });
   }
 }
